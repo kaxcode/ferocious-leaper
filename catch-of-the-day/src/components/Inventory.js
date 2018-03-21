@@ -8,6 +8,7 @@ class Inventory extends React.Component {
     fishes: PropTypes.object.isRequired,
     updateFish: PropTypes.func.isRequired,
     addFish: PropTypes.func.isRequired,
+    deleteFish: PropTypes.func.isRequired,
     loadSampleFishes: PropTypes.func.isRequired
   };
 
@@ -21,6 +22,7 @@ class Inventory extends React.Component {
             index={key}
             fish={this.props.fishes[key]}
             updateFish={this.props.updateFish}
+            deleteFish={this.props.deleteFish}
           />
         ))}
         <AddFishForm addFish={this.props.addFish} />

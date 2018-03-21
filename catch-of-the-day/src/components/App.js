@@ -74,6 +74,15 @@ class App extends React.Component {
     this.setState({ order });
   };
 
+  deleteFish = key => {
+    // 1. take a copy of state
+    const fishes = { ...this.state.fishes };
+    // 2. update the state
+    fishes[key] = null;
+    // 3.  update state
+    this.setState({ fishes });
+  };
+
   render() {
     return (
       <div className="catch-of-the-day">
