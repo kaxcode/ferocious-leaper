@@ -4,12 +4,31 @@ import Order from './Order';
 import Fish from './Fish';
 import Inventory from './Inventory';
 import sampleFishes from '../sample-fishes';
+import base from '../base';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
   state = {
     fishes: {},
     order: {}
   };
+
+  static propTypes = {
+    match: PropTypes.object.isRequired
+  };
+
+  componentDidMount() {
+    const { params } = this.props.match;
+    this.ref = base.syncState(`${params.storeId}/fishes`, {
+      context: this,
+      state: 'fishes'
+    });
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+
   addFish = fish => {
     // 1. Take a copy of the existing state
     const fishes = { ...this.state.fishes };
@@ -18,9 +37,11 @@ class App extends React.Component {
     // 3. Set the new fishes object to state
     this.setState({ fishes });
   };
+
   loadSampleFishes = () => {
     this.setState({ fishes: sampleFishes });
   };
+
   addToOrder = key => {
     // 1. take a copy of state
     const order = { ...this.state.order };
@@ -29,6 +50,7 @@ class App extends React.Component {
     // 3. Call setState to update our state object
     this.setState({ order });
   };
+
   render() {
     return (
       <div className="catch-of-the-day">
